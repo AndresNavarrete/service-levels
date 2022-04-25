@@ -10,6 +10,6 @@ class InputParser:
         self.loadInput()
     
     def loadInput(self):
-        df = pandas.read_excel(self.inputPath)
+        df = pandas.read_excel(self.inputPath, sheet_name= "Viajes")
         input = df.to_json(orient='records')
         self.requests = json.loads(input)
