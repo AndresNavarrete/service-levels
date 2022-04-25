@@ -2,6 +2,7 @@ from packages.enums import User_Modes, Google_Modes
 from packages.googleMaps import Directions
 from packages.inputParser import InputParser
 from packages.outputParser import OutputParser
+from packages.validator import Validator
 import dateparser
 
 class ServiceLevelManager:
@@ -9,15 +10,20 @@ class ServiceLevelManager:
     def __init__(self, inputPath, apiKey):
         self.inputPath = inputPath
         self.input = InputParser(inputPath)
+        self.validator = Validator(self.input)
         outputPath = inputPath[:-5] + "_Completed.xlsx"
         self.output = OutputParser(outputPath)
         self.directions = Directions(apiKey)
         self.responses = []
     
     def execute(self):
+        self.validateInput()
         self.getAllServiceLevels()
         self.fillOutput()
         self.writeOutput()
+    
+    def validateInput(self):
+        self.validator.validate_input()
 
     def getAllServiceLevels(self):
         for request in self.input.requests:

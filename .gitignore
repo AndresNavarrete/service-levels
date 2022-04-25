@@ -12,8 +12,6 @@ __pycache__/
 *.csv
 *.xlsx
 
-
-
 # Distribution / packaging
 .Python
 build/
