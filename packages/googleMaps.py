@@ -30,8 +30,6 @@ class Geocoder(GoogleMaps):
 class Directions(GoogleMaps):
    # https://developers.google.com/maps/documentation/directions/get-directions
 
-   # TODO: Add transit with only bus.
-
    def getDirections(self, origin, destination, mode, departure_time, only_bus):
       directionsResponse = self.getDirectionsResponse(origin, destination, mode, departure_time, only_bus)
       if not directionsResponse:

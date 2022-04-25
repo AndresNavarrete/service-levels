@@ -4,6 +4,7 @@ from packages.inputParser import InputParser
 from packages.outputParser import OutputParser
 from packages.validator import Validator
 import dateparser
+import datetime
 
 class ServiceLevelManager:
 
@@ -11,7 +12,8 @@ class ServiceLevelManager:
         self.inputPath = inputPath
         self.input = InputParser(inputPath)
         self.validator = Validator(self.input)
-        outputPath = inputPath[:-5] + "_Completed.xlsx"
+        time = datetime.datetime.now().strftime('%d_%m__%H_%M_%S')
+        outputPath = "resources/" + time + ".xlsx"
         self.output = OutputParser(outputPath)
         self.directions = Directions(apiKey)
         self.responses = []
@@ -23,20 +25,27 @@ class ServiceLevelManager:
         self.writeOutput()
     
     def validateInput(self):
-        self.validator.validate_input()
+        self.validator.validateInput()
 
     def getAllServiceLevels(self):
         for request in self.input.requests:
-            origin = self.getOrigin(request)
-            destination = self.getDestination(request)
-            mode = self.getMode(request)
-            hour = request["Hora"]
-            departure = "Next Monday at {}".format(hour)
-            date = dateparser.parse(departure)
-            only_bus = request["Modo"] == User_Modes.bus
+            self.getServiceLevel(request)
+            print("Processed request {}".format(request["ID"]))
+            
+    
+    def getServiceLevel(self, request):
+        origin = self.getOrigin(request)
+        destination = self.getDestination(request)
+        mode = self.getMode(request)
+        hour = request["Hora"]
+        departure = "Monday at {}".format(hour)
+        
+        date = dateparser.parse(departure)
+        only_bus = request["Modo"] == User_Modes.bus
 
-            response = self.directions.getDirections(origin, destination, mode, date, only_bus)
-            self.responses.append(response)
+        response = self.directions.getDirections(origin, destination, mode, date, only_bus)
+        self.responses.append(response)
+
 
     def getOrigin(self, request):
         if request["Origen_str"] == None:
