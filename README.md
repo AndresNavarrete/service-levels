@@ -7,7 +7,7 @@ Para instalar todas las librerias necesarias para correr el programa basta con t
 pip install -r requirements.txt
 ```
 
-Finalmete, para correr el programa basta con ejecutar el siguiente código en la línea de comandos 
+Finalmente, para correr el programa basta con ejecutar el siguiente código en la línea de comandos 
 
 ```sh
 python main.py
