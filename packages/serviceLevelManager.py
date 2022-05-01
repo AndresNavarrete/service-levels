@@ -38,9 +38,8 @@ class ServiceLevelManager:
         destination = self.getDestination(request)
         mode = self.getMode(request)
         hour = request["Hora"]
-        departure = "Monday at {}".format(hour)
         
-        date = dateparser.parse(departure)
+        date = dateparser.parse(hour)
         only_bus = request["Modo"] == User_Modes.bus
 
         response = self.directions.getDirections(origin, destination, mode, date, only_bus)
