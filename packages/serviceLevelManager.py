@@ -29,8 +29,11 @@ class ServiceLevelManager:
 
     def getAllServiceLevels(self):
         for request in self.input.requests:
-            self.getServiceLevel(request)
-            print("Processed request {}".format(request["ID"]))
+            try:
+                self.getServiceLevel(request)
+                print("Processed request {}".format(request["ID"]))
+            except Exception as e:
+                print("Error on request {}: {}".format(request["ID"], e))
             
     
     def getServiceLevel(self, request):

@@ -109,7 +109,7 @@ class Directions(GoogleMaps):
          "headway": 0,
       }
       if step["travel_mode"] == "TRANSIT":
-         stepInfo["headway"] = step["transit_details"]["headway"]
+         stepInfo["headway"] = step["transit_details"].get("headway", 0)
          
       return stepInfo
    
